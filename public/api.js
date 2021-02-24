@@ -35,7 +35,18 @@ const API = {
 
     return json;
   },
+  async deleteWorkoutAPI() {
+    const id = location.search.split("=")[1];
+    console.log("delete",id);
+    const res = await fetch("/api/delete/" + id, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
 
+    const json = await res.json();
+
+    return json;
+  },
   async getWorkoutsInRange() {
     const res = await fetch(`/api/workouts/range`);
     const json = await res.json();

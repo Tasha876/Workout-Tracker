@@ -18,7 +18,14 @@ module.exports = (app) => {
 
   
   app.get('/api/workouts/', (req,res) => {
-    db.Workout.find({}, (err, data) => {
+    // db.Workout.find({}
+    db.Workout.aggregate([{
+        $set: {
+            totalDuration: {
+                $sum: "$exercises.duration",
+            }
+        }
+    }], (err, data) => {
         if (err) res.send(err)
         else {
             res.json(data)
@@ -28,8 +35,6 @@ module.exports = (app) => {
   }),
 
   app.put('/api/workouts/:id', (req,res) => {
-    console.log("put")
-    console.log(req.body, req.params.id)
     db.Workout.findOneAndUpdate(
         { _id : new mongoose.Types.ObjectId(req.params.id)},       
         {
@@ -69,6 +74,18 @@ module.exports = (app) => {
         .limit(7)
         .then(data => res.json(data))
         .catch(err => res.json(err))
-  })
+  });
+
+  app.delete('/api/delete/:id', (req,res) => {
+    db.Workout.deleteOne(
+        { _id : new mongoose.Types.ObjectId(req.params.id)},
+        (err, data) => {
+        if (err) res.send(err)
+        else {
+            console.log(data)
+            res.json(data) 
+        }
+    })
+  });
 
 }

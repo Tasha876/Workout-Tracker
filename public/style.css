@@ -156,7 +156,7 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 0;
   border: 1px solid #aaa;
   padding: 10px;
   background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
@@ -187,6 +187,34 @@ button {
   transition: all 1.2s;
 }
 
+#del {
+  display: none;
+  position: relative;
+  border-radius: 4px;
+  border-width: 1px;
+  font-size: 13px;
+  line-height: 19.5px;
+  margin: 0px 0px 16px;
+  padding: 12px 59.5px 12px 20px;
+  text-align: left;
+  width: 300px;
+  min-height: 80px;
+  position: fixed;
+  top: 10px;
+  right: -320px;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+#del.success {
+  display: block;
+  opacity: 1;
+  right: 10px;
+  background-color: hsl(356, 41%, 86%);
+  color: hsl(0, 73%, 43%);
+  transition: all 1.2s;
+}
+
 .workout-type,
 form .cardio-form div,
 form .resistance-form div {
@@ -214,12 +242,12 @@ form::after {
   display: none;
 }
 
-button {
+.button {
   display: block;
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 0px !important;
   border: 1px solid #aaa;
   padding: 10px;
   background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
@@ -280,7 +308,7 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 0px;
   border: 1px solid #aaa;
   padding: 10px;
   background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
@@ -320,7 +348,7 @@ button {
   display: block;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 0;
   border: 1px solid #aaa;
   padding: 10px;
   background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
@@ -412,15 +440,11 @@ form > button {
 }
 
 .buttons .ui.button:first-child {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 6px !important;
 }
 
-.buttons .ui.button:nth-child(2) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 0;
+.buttons .ui.button:last-child {
+  border-bottom-right-radius: 6px !important;
 }
 
 .workout-type,

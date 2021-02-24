@@ -7,7 +7,9 @@ async function init() {
       location.search = "?id=" + workout._id;
     } else {
       document.querySelector("#continue-btn").classList.add("d-none")
+      document.querySelector("#delete-btn").classList.add("d-none")
     }
   }
 }
+
 
