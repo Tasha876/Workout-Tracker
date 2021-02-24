@@ -1,43 +1,42 @@
-const mongojs = require("mongojs");
-const databaseUrl = "workout";
-const collections = ["workouts, exercises"];
+// const mongojs = require("mongojs");
+// const databaseUrl = "workout";
+// const collections = ["workouts, exercises"];
 
-const db = mongojs(databaseUrl, collections);
+// const db = mongojs(databaseUrl, collections);
+
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://localhost/workout", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true,
+});
+
+const db = require("../models");
 
 module.exports = (app) => {
+
   
   app.get('/api/workouts/', (req,res) => {
-    db.workouts.find({}, (err, data) => {
+    db.Workout.find({}, (err, data) => {
         if (err) res.send(err)
         else {
             res.json(data)
             console.log(data)
         }
     })
-  });
+  }),
 
-  app.put('/api/workouts/:id', async (req,res) => {
+  app.put('/api/workouts/:id', (req,res) => {
     console.log("put")
     console.log(req.body, req.params.id)
-    db.workouts.update(
-        { _id : mongojs.ObjectID(req.params.id)},
-        { 
-        $push: {
-            exercises: req.body,
-            },
-        },
-    db.workouts.aggregate([
+    db.Workout.findOneAndUpdate(
+        { _id : new mongoose.Types.ObjectId(req.params.id)},       
         {
-            $set : { 
-                totalDuration :
-                {
-                $sum: "$exercises.duration",
-                }
-            }, 
-        },
-    ]),
-    (err, data) => {
-        // console.log("b",a);
+            $push: {
+                    exercises: req.body,
+            },
+        }, (err, data) => {
         if (err) res.send(err)
         else {
             console.log("data",data)
@@ -47,10 +46,9 @@ module.exports = (app) => {
   });
 
     app.post('/api/workouts/', (req,res) => {
-      db.workouts.insert({
+      db.Workout.create({
           day: new Date(),
           exercises: [],
-          totalDuration: 0,
       }, (err, data) => {
           if (err) res.send(err)
           else {
@@ -61,15 +59,16 @@ module.exports = (app) => {
   });
 
   app.get('/api/workouts/range', (req,res) => {
-    let day = new Date()
-    day.setHours(0,0,0) // sets date to the very beginning of the day
-    day.setDate(new Date().getDate() - 6) // gets one week - 1 day (i.e, 6 days) ago
-    db.workouts.find({ "exercises.type" : "resistance", day: { $gt: day} }, (err, data) => {
-        if (err) res.send(err)
-        else {
-            res.json(data)
-            console.log(data)
+    db.Workout.aggregate([{
+        $set: {
+            totalDuration: {
+                $sum: "$exercises.duration",
+            }
         }
-    })
-  });
+    }]).sort({ _id: 1 })
+        .limit(7)
+        .then(data => res.json(data))
+        .catch(err => res.json(err))
+  })
+
 }

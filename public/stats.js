@@ -22,10 +22,12 @@ function generatePalette() {
 }
 
 function populateChart(data) {
+  
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
   const colors = generatePalette();
+  // console.log(getWorkoutsSet(data));
 
   let line = document.querySelector('#canvas').getContext('2d');
   let bar = document.querySelector('#canvas2').getContext('2d');
@@ -173,8 +175,37 @@ function populateChart(data) {
   });
 }
 
+/* Nevermind on this code :( */
+// const getWorkoutsSet = (data) =>  {
+//   let workouts = data.map(workout => workout.exercises).flat()
+//   const workoutObj = {}
+
+//   workouts.forEach((workout) => {
+//     if (workoutObj[workout.name]) {
+//       workoutObj[workout.name].duration += workout.duration;
+//       workoutObj[workout.name].weight += workout.weight;
+//     }
+//     else if (workout.type === "resistance") {
+//       workoutObj[workout.name] = { duration: workout.duration, weight: workout.weight };
+//     }
+//     else {
+//       workoutObj[workout.name] = { duration: workout.duration};
+//     }
+//     console.log(workoutObj)
+//   }); return workoutObj
+// };
+
 function calculateTotalWeight(data) {
+
+  /* This code does not work because it messes up the data for the bar graph */
+  // let names = workoutNames(data)
+  // let totals = names.map(name => getWorkoutsSet(data)[name].weight)
+  // console.log(totals)
+  // return totals;
+  
   let totals = [];
+
+  /* This code doesn't work because the workout names are a set but the total weights are not*/
 
   data.forEach((workout) => {
     const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
@@ -196,6 +227,7 @@ function workoutNames(data) {
 
   data.forEach((workout) => {
     workout.exercises.forEach((exercise) => {
+      console.log(exercise.name)
       workouts.push(exercise.name);
     });
   });
