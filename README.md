@@ -1,5 +1,5 @@
 # Workout-Tracker
-A Mongo/Express based workout tracker
+A Mongo/Express based workout tracker.
 
 ## Table of Contents
 1. [ Description ](#desc)
@@ -16,7 +16,6 @@ This workout tracker allows you to create workouts and add exercises to them. It
 
 ### Summary of Functionality
 
-#### NOVELty (Horiseon Marketing)
 With this app, you can:
 * View statistics from workouts that you have previously completed in the dashboard.
 * Create workouts.
@@ -40,8 +39,11 @@ Should you find an issue with this webpage, please create a [new issue](https://
 <a name="next_steps"></a>
 ## 5. Next steps
 This workout tracker is an ongoing project. Some next steps include:
+
 * Adding the functionality to delete exercises as well as complete workouts.
 * Fixing the bug (on the front-end) with duplicate exercises showing as undefined on the stats page in the circle graphs.
+* Getting rid of the flashes when loading pages.
+
 
 <a name="acknowledge"></a>
 ## 6. Authors and Acknowledgement
