@@ -435,6 +435,10 @@ form > button {
   width: 50%;
 }
 
+.workout-stats ~ .buttons .ui.button {
+  width: 33.333% !important;
+}
+
 .ui.card h2 {
   padding: 10px;
 }
